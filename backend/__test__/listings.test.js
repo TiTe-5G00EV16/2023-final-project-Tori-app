@@ -28,16 +28,19 @@ describe('GET listings endoint', () => {
           id: 1,
           name: 'Iphone 8',
           price: 400,
+          description: 'Minor cracks on the screen.'
         }),
         expect.objectContaining({
           id: 2,
           name: 'Shirt',
           price: 5,
+          description: 'Size L'
         }),
         expect.objectContaining({
           id: 3,
           name: 'Speakers',
           price: 40,
+          description: '2years old.'
         }),
       ]),
     );
@@ -72,28 +75,28 @@ describe('GET listings endoint', () => {
 describe('POST listing endpoint', ()=> {
 
   const loggedInUser = {
-    userId: '',
+    id: '',
     email: '',
     token: ''
   }
 
   beforeAll(async () => {
     connection.query('DELETE FROM users WHERE email=?', ['john.wayne@domain.com'])
+    const data = {
+      name: 'John Wayne',
+      email: 'john.wayne@domain.com',
+      password: 'password123'
+    }
 
-  const data = {
-    name: 'John Wayne',
-    email: 'john.wayne@domain.com',
-    password: 'password123'
-  }
-
-  const response = await request(app)
+    const response = await request(app)
       .post('/api/users/signup')
       .set('Accept', 'application/json')
+      .set('Content', 'application/json')
       .send(data)
-    loggedInUser.userId = response.body.userId
+    loggedInUser.id = response.body.id
     loggedInUser.email = response.body.email
     loggedInUser.token = response.body.token
-  })
+  });
 
   test('should create a new listing', async () => {
     const listing = {
@@ -119,6 +122,7 @@ describe('POST listing endpoint', ()=> {
   test('should not allow no name property', async () => {
     const listing = {
       price: 1,
+      description: 'Test description'
     };
     const response = await request(app)
       .post('/api/listings')
@@ -131,6 +135,7 @@ describe('POST listing endpoint', ()=> {
   test('should not allow no price property', async () => {
     const listing = {
       name: 'Test name',
+      description: 'Test description'
     };
     const response = await request(app)
       .post('/api/listings')

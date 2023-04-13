@@ -60,12 +60,12 @@ const listings = {
     });
   }),
   updateById: (listings) => new Promise((resolve, reject) => {
-    const updateQuery = 'UPDATE listings SET name = ?, price = ? WHERE id = ?;';
+    const updateQuery = 'UPDATE listings SET name = ?, price = ?, description = ? WHERE id = ?;';
     db.getConnection((err, connection) => {
       if (err)
         return reject(err);
 
-      connection.query(updateQuery, [listings.name, listings.price, listings.id], (err, result) => {
+      connection.query(updateQuery, [listings.name, listings.price, listings.description, listings.id], (err, result) => {
         connection.release();
         if (err) {
           return reject(err);
