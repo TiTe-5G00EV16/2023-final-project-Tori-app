@@ -99,6 +99,7 @@ describe('POST listing endpoint', ()=> {
     const listing = {
       name: 'Test item',
       price: 1,
+      description: 'Test description'
     };
 
     const response = await request(app)
