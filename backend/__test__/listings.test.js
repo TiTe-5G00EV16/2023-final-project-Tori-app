@@ -179,8 +179,6 @@ describe('POST listing endpoint', ()=> {
       expect(response.text).toContain('"name" length must be at least 2 characters long');
   });
 
-
-
 describe('DELETE listings endpoint', () => {
     test('should delete the listing by id', async () => {
       const listing = {

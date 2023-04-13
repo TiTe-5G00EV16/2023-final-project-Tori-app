@@ -52,6 +52,7 @@ const updateListing = async (req, res) => {
     id: req.body.id,
     name: req.body.name,
     price: req.body.price,
+    description: req.body.description
   };
   const response = await listings.updateById(listing);
   if (response) {
