@@ -1,5 +1,9 @@
+
+# name of the workflow
 name: backend
+# event on which to run
 on: push
+# jobs in this workflow
 jobs:
   # the testing job
   test:
