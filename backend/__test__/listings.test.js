@@ -78,7 +78,7 @@ describe('POST listing endpoint', ()=> {
   }
 
   beforeAll(async () => {
-    pool.query('DELETE FROM users WHERE email=?', ['john.wayne@domain.com'])
+    connection.query('DELETE FROM users WHERE email=?', ['john.wayne@domain.com'])
 
   const data = {
     name: 'John Wayne',
