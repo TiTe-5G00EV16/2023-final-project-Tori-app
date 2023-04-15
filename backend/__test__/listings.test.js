@@ -127,6 +127,8 @@ describe('POST listing endpoint', ()=> {
     const response = await request(app)
       .post('/api/listings')
       .set('Accept', 'application/json')
+      .set('Authorization', 'Bearer ' + loggedInUser.token)
+      .set('Content', 'application/json')
       .send(listing);
     expect(response.status).toEqual(400);
     expect(response.text).toContain('"name" is required');
@@ -140,6 +142,8 @@ describe('POST listing endpoint', ()=> {
     const response = await request(app)
       .post('/api/listings')
       .set('Accept', 'application/json')
+      .set('Authorization', 'Bearer ' + loggedInUser.token)
+      .set('Content', 'application/json')
       .send(listing);
     expect(response.status).toEqual(400);
     expect(response.text).toContain('"price" is required');
@@ -153,6 +157,8 @@ describe('POST listing endpoint', ()=> {
     const response = await request(app)
       .post('/api/listings')
       .set('Accept', 'application/json')
+      .set('Authorization', 'Bearer ' + loggedInUser.token)
+      .set('Content', 'application/json')
       .send(listing);
     expect(response.status).toEqual(400);
     expect(response.text).toContain('"name" is not allowed to be empty');
@@ -166,6 +172,8 @@ describe('POST listing endpoint', ()=> {
     const response = await request(app)
       .post('/api/listings')
       .set('Accept', 'application/json')
+      .set('Authorization', 'Bearer ' + loggedInUser.token)
+      .set('Content', 'application/json')
       .send(listing);
     expect(response.status).toEqual(400);
     expect(response.text).toContain('"price" must be greater than 0');
@@ -179,6 +187,8 @@ describe('POST listing endpoint', ()=> {
       const response = await request(app)
         .post('/api/listings')
         .set('Accept', 'application/json')
+        .set('Authorization', 'Bearer ' + loggedInUser.token)
+        .set('Content', 'application/json')
         .send(listing);
       expect(response.status).toEqual(400);
       expect(response.text).toContain('"name" length must be at least 2 characters long');
@@ -188,16 +198,21 @@ describe('DELETE listings endpoint', () => {
     test('should delete the listing by id', async () => {
       const listing = {
         name: 'Plate',
-        price: 1
+        price: 1,
+        description: 'Test'
       };
       const postResponse = await request(app)
         .post('/api/listings')
         .set('Accept', 'application/json')
+        .set('Authorization', 'Bearer ' + loggedInUser.token)
+        .set('Content', 'application/json')
         .send(listing);
       const postId = postResponse.body.id;
       const response = await request(app)
         .delete(`/api/listings/${postId}`)
-        .set('Accept', 'application/json');
+        .set('Accept', 'application/json')
+        .set('Authorization', 'Bearer ' + loggedInUser.token)
+        .set('Content', 'application/json')
       expect(response.status).toEqual(200);
       expect(response.text).toEqual('Listing deleted');
     });

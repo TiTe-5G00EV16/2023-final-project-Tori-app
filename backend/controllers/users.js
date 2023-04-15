@@ -91,6 +91,7 @@ const loginUser = async (req, res) => {
       { expiresIn: '1h' } // options like an experation time
     )
   } catch (err) {
+    console.log(err);
     return res.status(500).send('Something went wrong with login in the user');
   }
   res.status(201).json({
