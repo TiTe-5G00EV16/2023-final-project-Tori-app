@@ -53,3 +53,9 @@ jobs:
           JWT_KEY: ${{ secrets.JWT_KEY }}
         working-directory: ./backend
         run: npm run test
+  deploy:
+    needs: test
+    runs-on: ubuntu-lastest
+    steps:
+      - name: Trigger the deploy on Render
+        run: curl -X GET ${{ secrets.BACKEND_RENDER_TRIGGER }}

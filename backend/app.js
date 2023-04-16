@@ -9,4 +9,9 @@ app.use(express.json());
 app.use('/api/listings', listingsRouter);
 app.use('/api/users', users);
 
+
+app.get('/health', (req, res) => {
+    res.send('OK');
+  });
+
 module.exports = app;
