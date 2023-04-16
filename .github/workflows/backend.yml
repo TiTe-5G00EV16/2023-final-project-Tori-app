@@ -55,7 +55,7 @@ jobs:
         run: npm run test
   deploy:
     needs: test
-    runs-on: ubuntu-lastest
+    runs-on: ubuntu-latest
     steps:
       - name: Trigger the deploy on Render
         run: curl -X GET ${{ secrets.BACKEND_RENDER_TRIGGER }}
