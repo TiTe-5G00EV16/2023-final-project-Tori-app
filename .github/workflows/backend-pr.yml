@@ -1,9 +1,9 @@
-name: backend
+name: Backend PR
 on:
-  push:
-    - main
+  pull_request:
+     - main
   paths:
-    - main
+    - backend/**
 jobs:
   # the testing job
   test:
@@ -53,9 +53,3 @@ jobs:
           JWT_KEY: ${{ secrets.JWT_KEY }}
         working-directory: ./backend
         run: npm run test
-  deploy:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Trigger the deploy on Render
-        run: curl -X GET ${{ secrets.BACKEND_RENDER_TRIGGER }}
