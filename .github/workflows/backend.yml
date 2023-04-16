@@ -1,9 +1,10 @@
 name: backend
 on:
   push:
-    - main
+    branches:
+      - main
   paths:
-    - main
+    - backend/**
 jobs:
   # the testing job
   test:

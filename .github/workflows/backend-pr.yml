@@ -1,7 +1,8 @@
 name: Backend PR
 on:
   pull_request:
-     - main
+    branches:
+      - main
   paths:
     - backend/**
 jobs:
