@@ -48,7 +48,7 @@ describe('GET listings endoint', () => {
 
   test('should return 1 listing', async () => {
     const response = await request(app)
-      .get('/api/listings/2')
+      .get('/api/listings/1')
       .set('Accept', 'application/json');
 
     expect(response.status).toEqual(200);
