@@ -71,7 +71,7 @@ const Authenticate = props => {
     onSuccess: (data) => {
       // Will execute only once, for the last mutation,
       // regardless which mutation resolves first
-      console.log(data);
+      //console.log(data);
       auth.login(data.id, data.token);
     },
     onError: (error) => {

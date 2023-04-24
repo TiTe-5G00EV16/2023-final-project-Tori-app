@@ -36,7 +36,7 @@ const AddListing = () => {
   return (
     <form onSubmit={listingSubmitHandler} className="listing-form">
       <Input id="name" type="text" label="Header" ref={nameRef}/>
-      <Input id="price" type="number" label="Price" ref={priceRef} min="0"/>
+      <Input id="price" type="number" label="Price" ref={priceRef} min="0" step="0.01"/>
       <Input id="description" type="text" label="Description" ref={descriptionRef} />
       <button type="submit">
         Add listing

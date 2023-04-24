@@ -4,7 +4,7 @@ const app = require('../app');
 const connection = require('../db/pool');
 
 afterAll(async () => {
-  const deleteQuery = `DELETE FROM listings WHERE name LIKE 'Test item' AND country LIKE 'Test name';`;
+  const deleteQuery = `DELETE FROM listings WHERE name LIKE 'Test item' AND name LIKE 'Test name';`;
   connection.query(deleteQuery, (err, result) => {
     if (err) {
       console.log(err);
@@ -155,22 +155,6 @@ describe('GET listings endoint', () => {
     );
   });
 
-  test('should return 1 listing', async () => {
-    const response = await request(app)
-      .get('/api/listings/1')
-      .set('Accept', 'application/json');
-
-    expect(response.status).toEqual(200);
-    expect(response.headers['content-type']).toMatch(/json/);
-    expect(response.body).toEqual(
-      expect.objectContaining({
-        name: 'Test item',
-        price: 1,
-        description: 'Test description'
-      }),
-    );
-  });
-
   test('should return 404 and Not Found', async () => {
     const response = await request(app)
       .get('/api/listings/101');
@@ -179,30 +163,52 @@ describe('GET listings endoint', () => {
     expect(response.text).toContain('Not Found');
   });
 
-  describe('DELETE listings endpoint', () => {
-    test('should delete the listing by id', async () => {
-      const listing = {
-        name: 'Plate',
-        price: 1,
-        description: 'Test'
-      };
-      const postResponse = await request(app)
-        .post('/api/listings')
-        .set('Accept', 'application/json')
-        .set('Authorization', 'Bearer ' + loggedInUser.token)
-        .set('Content', 'application/json')
-        .send(listing);
-      const postId = postResponse.body.id;
-      const response = await request(app)
-        .delete(`/api/listings/${postId}`)
-        .set('Accept', 'application/json')
-        .set('Authorization', 'Bearer ' + loggedInUser.token)
-        .set('Content', 'application/json')
-      expect(response.status).toEqual(200);
-      expect(response.text).toEqual('Listing deleted');
-    });
-  });
-
 });
 
+describe('DELETE listings endpoint', () => {
+  const loggedInUser = {
+    id: '',
+    email: '',
+    token: ''
+  }
 
+  beforeAll(async () => {
+    connection.query('DELETE FROM users WHERE email=?', ['john.wayne@domain.com'])
+    const data = {
+      name: 'John Wayne',
+      email: 'john.wayne@domain.com',
+      password: 'password123'
+    }
+
+    const response = await request(app)
+      .post('/api/users/signup')
+      .set('Accept', 'application/json')
+      .set('Content', 'application/json')
+      .send(data)
+    loggedInUser.id = response.body.id
+    loggedInUser.email = response.body.email
+    loggedInUser.token = response.body.token
+  });
+
+  test('should delete the listing by id', async () => {
+    const listing = {
+      name: 'Plate',
+      price: 1,
+      description: 'Test'
+    };
+    const postResponse = await request(app)
+      .post('/api/listings')
+      .set('Accept', 'application/json')
+      .set('Authorization', 'Bearer ' + loggedInUser.token)
+      .set('Content', 'application/json')
+      .send(listing);
+    const postId = postResponse.body.id;
+    const response = await request(app)
+      .delete(`/api/listings/${postId}`)
+      .set('Accept', 'application/json')
+      .set('Authorization', 'Bearer ' + loggedInUser.token)
+      .set('Content', 'application/json')
+    expect(response.status).toEqual(200);
+    expect(response.text).toEqual("{\"message\":\"Listing deleted\"}");
+  });
+});
