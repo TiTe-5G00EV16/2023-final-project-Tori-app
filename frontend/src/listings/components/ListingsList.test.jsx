@@ -42,7 +42,7 @@ describe('The ListingsList', () => {
     test('should show a list of listings', () => {
         render(<ListingsList items={TEST_LISTINGS} />,{ wrapper });
         expect(screen.queryByText('No listings found.')).toBeNull();
-        expect(screen.getByText('Hat')).toBeInTheDocument();
-        expect(screen.getByText('InttiRolexi')).toBeInTheDocument();
+        expect(screen.getByText('Hat -')).toBeInTheDocument();
+        expect(screen.getByText('InttiRolexi -')).toBeInTheDocument();
       });
 });
