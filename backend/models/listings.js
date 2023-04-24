@@ -74,5 +74,20 @@ const listings = {
       });
     });
   }),
+  findByUserId: (id) => new Promise((resolve, reject) => {
+    const selectQuery = 'SELECT * FROM listings WHERE userId=?;';
+    db.getConnection((err, connection) => {
+      if (err){
+        return reject(err);
+      }
+      connection.query(selectQuery, id, (err, result) => {
+        connection.release();
+        if (err) {
+          return reject(err);
+        }
+        resolve(result);
+      });
+    });
+  })
 };
 module.exports = listings;

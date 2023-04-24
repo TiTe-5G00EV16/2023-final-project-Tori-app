@@ -16,7 +16,7 @@ const getListingById = async (req, res) => {
   if (response.length === 1) {
     res.send(response[0]);
   }else{
-    res.status(404).send('Not Found');
+    res.status(404).send({message:'Not Found'});
   }
 };
 
@@ -37,7 +37,8 @@ const createListing = async (req, res) => {
   const listing = {
     name: req.body.name,
     price: req.body.price,
-    description: req.body.description
+    description: req.body.description,
+    userId: req.userData.userId
   };
 
   const response = await listings.save(listing);
@@ -64,7 +65,16 @@ const deleteListing = async (req, res) => {
   const id = parseInt(req.params.id, 10);
   const response = await listings.deleteById(id);
   if (response) {
-    res.status(200).send('Listing deleted');
+    res.status(200).send({message:'Listing deleted'});
+  }
+};
+
+const getListingsByUserId = async (req, res) => {
+  const userId = req.userData.userId;
+  const response = await listings.findByUserId(userId);
+  console.log(response);
+  if (response) {
+    res.send(response);
   }
 };
 
@@ -75,4 +85,5 @@ module.exports = {
   getListings,
   getListingById,
   updateListing,
+  getListingsByUserId
 };

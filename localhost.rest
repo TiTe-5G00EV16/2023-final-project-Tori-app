@@ -19,11 +19,12 @@ POST http://localhost:5000/api/users/signup
 Content-Type: application/json
 
 {
-  "name": "John Wayne",
-  "email": "john@wayne.com",
-  "password": "john@wayne"
+  "name": "John Waynee",
+  "email": "john@waynee.com",
+  "password": "john@waynee"
 }
-
+###
+GET http://localhost:5000/api/users/getowner/79d2b9ac-b92d-4f3b-8151-62d068867570
 ###
 # @name login
 POST http://localhost:5000/api/users/login

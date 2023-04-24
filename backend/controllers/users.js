@@ -13,7 +13,7 @@ const signUpUser = async (req, res) => {
     // Parameters, the string to hash, salt length to generate or salt to use
     hashedPassword = await bcrypt.hash(password, 12);
   } catch (err) {
-    return res.status(500).send('Could not create user, try again');
+    return res.status(500).send({message: 'Could not create user, try again'});
   }
 
   const newUser = {
@@ -26,12 +26,12 @@ const signUpUser = async (req, res) => {
   try {
     const exist = await users.findByEmail(email);
     if (exist.length > 0) {
-      return res.status(422).send('Could not create user, user exist');
+      return res.status(422).send({message: 'Could not create user, user exist'});
     }
 
     const result = await users.create(newUser);
     if (!result) {
-      return res.status(500).send('Something went wrong creating the user');
+      return res.status(500).send({message: 'Something went wrong creating the user'});
     }
 
     const token = jwt.sign(
@@ -51,7 +51,7 @@ const signUpUser = async (req, res) => {
 
   } catch (err) {
     console.log(err);
-    return res.status(500).send('Signup failed, please try again');
+    return res.status(500).send({message: 'Signup failed, please try again'});
   }
 };
 
@@ -61,13 +61,13 @@ const loginUser = async (req, res) => {
   try {
     const result = await users.findByEmail(email);
     if (!result[0]) {
-      return res.status(401).send('Could not identify user, credetials might be wrong');
+      return res.status(401).send({message: 'Could not identify user, credetials might be wrong'});
     }
 
     identifiedUser = result[0];
   } catch (err) {
     console.log(err);
-    return res.status(500).send('Something went wrong with login in the user');
+    return res.status(500).send({message: 'Something went wrong with login in the user'});
   }
   console.log(identifiedUser);
   let isValidPassword = false;
@@ -75,10 +75,10 @@ const loginUser = async (req, res) => {
     isValidPassword = await bcrypt.compare(password, identifiedUser.password);
   } catch (err) {
     console.log(err);
-    return res.status(500).send('Could not log you in , check your credetials');
+    return res.status(500).send({message: 'Could not log you in , check your credetials'});
   }
   if (!isValidPassword) {
-    return es.status(401).send('Could not identify user, credetials might be wrong');
+    return res.status(401).send({message: 'Could not identify user, credetials might be wrong'});
   }
   let token
   try {
@@ -92,7 +92,7 @@ const loginUser = async (req, res) => {
     )
   } catch (err) {
     console.log(err);
-    return res.status(500).send('Something went wrong with login in the user');
+    return res.status(500).send({message: 'Something went wrong with login in the user'});
   }
   res.status(201).json({
     id: identifiedUser.id,
@@ -101,7 +101,18 @@ const loginUser = async (req, res) => {
   })
 };
 
+const getOwner = async (req, res) => {
+  const userId = req.params.id;
+  console.log(userId)
+  const response = await users.findOwnerById(userId);
+  console.log(response);
+  if(response) {
+    res.send(response);
+  }
+};
+
 module.exports = {
   signUpUser,
-  loginUser
+  loginUser,
+  getOwner
 };

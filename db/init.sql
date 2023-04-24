@@ -13,10 +13,9 @@ CREATE TABLE IF NOT EXISTS `listings` (
   `name` varchar(60) NOT NULL,
   `price` double(60, 2) NOT NULL,
   `description` varchar(650) NOT NULL,
+  `userId` varchar(36) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (userId) REFERENCES users(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-INSERT INTO `listings` (`name`,`price`, `description`) VALUES ('Iphone 8', 400, 'Minor cracks on the screen.');
-INSERT INTO `listings` (`name`,`price`, `description`) VALUES ('Shirt', 5, 'Size L');
-INSERT INTO `listings` (`name`,`price`, `description`) VALUES ('Speakers', 40, '2years old.');

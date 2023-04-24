@@ -1,6 +1,6 @@
 const express = require('express');
 const {
-  createListing, getListings, getListingById, updateListing, deleteListing
+  createListing, getListings, getListingById, updateListing, deleteListing, getListingsByUserId
 } = require('../controllers/listings');
 const verifyToken = require('../middleware/verifyToken');
 
@@ -15,5 +15,6 @@ router.use(verifyToken);
 router.post('/', createListing);
 router.put('/', updateListing);
 router.delete('/:id', deleteListing);
+router.get('/userlistings/:id', getListingsByUserId);
 
 module.exports = router;

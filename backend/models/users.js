@@ -29,6 +29,20 @@ const users = {
         resolve(result);
       });
     });
+  }),
+  findOwnerById: (userId) => new Promise((resolve, reject) => {
+    pool.getConnection((err, connection) => {
+      if(err) {
+        return reject(err);
+      }
+      connection.query(`SELECT name, email FROM users WHERE id=?;`, userId, (err, result) => {
+        connection.release();
+        if(err) {
+          return reject(err);
+        }
+        resolve(result);
+      });
+    });
   })
 }
 
