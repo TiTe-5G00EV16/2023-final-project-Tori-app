@@ -33,7 +33,7 @@ describe('The ListingItem', () => {
         price={TEST_LISTINGS.price}
         description={TEST_LISTINGS.description}
       />, { wrapper });
-    expect(screen.getByText('Hat')).toBeInTheDocument();
+    expect(screen.getByText('Hat -')).toBeInTheDocument();
     expect(screen.getByText('10€')).toBeInTheDocument();
     expect(screen.getByRole('listitem')).toHaveClass('listing-item');
   });
