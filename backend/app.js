@@ -8,7 +8,8 @@ const app = express();
 app.use(cors({
   origin : [
     'http://localhost:5173',
-    'https://tori-api.onrender.com'
+    'https://tori-api.onrender.com',
+    'https://torifront.onrender.com'
   ]
 }));
 app.use(express.json());
