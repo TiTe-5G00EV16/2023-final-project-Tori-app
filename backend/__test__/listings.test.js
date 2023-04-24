@@ -179,9 +179,7 @@ describe('GET listings endoint', () => {
     expect(response.text).toContain('Not Found');
   });
 
-});
-
-describe('DELETE listings endpoint', () => {
+  describe('DELETE listings endpoint', () => {
     test('should delete the listing by id', async () => {
       const listing = {
         name: 'Plate',
@@ -203,4 +201,8 @@ describe('DELETE listings endpoint', () => {
       expect(response.status).toEqual(200);
       expect(response.text).toEqual('Listing deleted');
     });
+  });
+
 });
+
+
