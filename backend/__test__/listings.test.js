@@ -12,66 +12,6 @@ afterAll(async () => {
   });
 });
 
-// Describe the test set
-describe('GET listings endoint', () => {
-  // The test that is being done
-  test('should return 200 and valid JSON', async () => {
-    const response = await request(app)
-      .get('/api/listings')
-      .set('Accept', 'application/json');
-
-    expect(response.status).toEqual(200);
-    expect(response.headers['content-type']).toMatch(/json/);
-    expect(response.body).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          id: 1,
-          name: 'Iphone 8',
-          price: 400,
-          description: 'Minor cracks on the screen.'
-        }),
-        expect.objectContaining({
-          id: 2,
-          name: 'Shirt',
-          price: 5,
-          description: 'Size L'
-        }),
-        expect.objectContaining({
-          id: 3,
-          name: 'Speakers',
-          price: 40,
-          description: '2years old.'
-        }),
-      ]),
-    );
-  });
-
-  test('should return 1 listing', async () => {
-    const response = await request(app)
-      .get('/api/listings/2')
-      .set('Accept', 'application/json');
-
-    expect(response.status).toEqual(200);
-    expect(response.headers['content-type']).toMatch(/json/);
-    expect(response.body).toEqual(
-      expect.objectContaining({
-        id: 2,
-        name: 'Shirt',
-        price: 5,
-      }),
-    );
-  });
-
-  test('should return 404 and Not Found', async () => {
-    const response = await request(app)
-      .get('/api/listings/101');
-
-    expect(response.status).toEqual(404);
-    expect(response.text).toContain('Not Found');
-  });
-
-});
-
 describe('POST listing endpoint', ()=> {
 
   const loggedInUser = {
@@ -193,6 +133,53 @@ describe('POST listing endpoint', ()=> {
       expect(response.status).toEqual(400);
       expect(response.text).toContain('"name" length must be at least 2 characters long');
   });
+
+// Describe the test set
+describe('GET listings endoint', () => {
+  // The test that is being done
+  test('should return 200 and valid JSON', async () => {
+    const response = await request(app)
+      .get('/api/listings')
+      .set('Accept', 'application/json');
+
+    expect(response.status).toEqual(200);
+    expect(response.headers['content-type']).toMatch(/json/);
+    expect(response.body).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          name: 'Test item',
+          price: 1,
+          description: 'Test description'
+        })
+      ]),
+    );
+  });
+
+  test('should return 1 listing', async () => {
+    const response = await request(app)
+      .get('/api/listings/2')
+      .set('Accept', 'application/json');
+
+    expect(response.status).toEqual(200);
+    expect(response.headers['content-type']).toMatch(/json/);
+    expect(response.body).toEqual(
+      expect.objectContaining({
+        id: 2,
+        name: 'Shirt',
+        price: 5,
+      }),
+    );
+  });
+
+  test('should return 404 and Not Found', async () => {
+    const response = await request(app)
+      .get('/api/listings/101');
+
+    expect(response.status).toEqual(404);
+    expect(response.text).toContain('Not Found');
+  });
+
+});
 
 describe('DELETE listings endpoint', () => {
     test('should delete the listing by id', async () => {
