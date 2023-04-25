@@ -8,10 +8,12 @@ import Modal from '../../shared/components/modal/Modal';
 import { AuthContext } from '../../shared/context/auth-context';
 import { deleteListing } from "../api/listings";
 import { getOwner } from "../../users/api/users";
+import { useHistory } from 'react-router-dom';
 
 const ListingItem = props => {
 
   const auth = useContext(AuthContext);
+  const history = useHistory();
 
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const showConfirmationHandler = () => setShowConfirmationModal(true);
@@ -70,7 +72,7 @@ const ListingItem = props => {
           </div>
           <div className="listing-item_actions">
             {auth.userId == props.userId &&
-              <button> Edit</button>
+              <button onClick={() => { history.push('/listings/edit/' + props.id)} }> Edit </button>
             }
             {auth.userId == props.userId &&
               <button onClick={showConfirmationHandler} className="delete">Delete</button>

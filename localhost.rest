@@ -1,6 +1,6 @@
 GET http://localhost:5000/api/listings
 ###
-GET http://localhost:5000/api/listings/1
+GET http://localhost:5000/api/listings/13
 ###
 POST http://localhost:5000/api/listings HTTP/1.1
 content-type: application/json
@@ -10,6 +10,17 @@ Authorization: BEARER {{authToken}}
   "name": "Hat",
   "price": 10.3,
   "description": "Very cool hat"
+}
+###
+POST http://localhost:5000/api/listings/edit HTTP/1.1
+content-type: application/json
+Authorization: BEARER {{authToken}}
+
+{
+  "id": 13,
+  "name": "Test2",
+  "price": 20,
+  "description": "yeet"
 }
 ###
 DELETE http://localhost:5000/api/listings/1
@@ -31,8 +42,8 @@ POST http://localhost:5000/api/users/login
 Content-Type: application/json
 
 {
-  "email": "john@wayne.com",
-  "password": "john@wayne"
+  "email": "jarkko@jarkko.com",
+  "password": "jarkkojarkko"
 }
 
 ###

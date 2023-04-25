@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-d
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import Listings from './listings/pages/Listings';
+import EditListing from './listings/pages/EditListing';
 import AddListing from './listings/pages/AddListing';
 import Authenticate from './users/pages/Authenticate';
 import MainNavigation from './shared/components/navigation/MainNavigation';
@@ -69,6 +70,9 @@ function App() {
         </Route>
         <Route path="/listings/userlistings" >
           <UserListings />
+        </Route>
+        <Route path="/listings/edit/:id">
+          <EditListing />
         </Route>
         <Redirect to="/" />
       </Switch>

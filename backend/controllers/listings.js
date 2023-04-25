@@ -11,7 +11,7 @@ const getListings = async (req, res) => {
 };
 
 const getListingById = async (req, res) => {
-  const id = parseInt(req.params.id, 10);
+  const id = parseInt(req.params.id);
   const response = await listings.findById(id);
   if (response.length === 1) {
     res.send(response[0]);
@@ -49,6 +49,21 @@ const createListing = async (req, res) => {
 };
 
 const updateListing = async (req, res) => {
+  console.log("kissa");
+  const schema = Joi.object({
+    id: Joi.number(),
+    name: Joi.string().min(2).required(),
+    price: Joi.number().precision(2).greater(0).required(),
+    description: Joi.string().min(2).required()
+  });
+
+  const { error } = schema.validate(req.body);
+  if (error) {
+    //Sending back the error details
+    res.status(400).send(error.details[0].message);
+    return;
+  }
+
   const listing = {
     id: req.body.id,
     name: req.body.name,

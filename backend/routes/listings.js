@@ -13,7 +13,7 @@ router.use(verifyToken);
 
 // Authenticated routes
 router.post('/', createListing);
-router.put('/', updateListing);
+router.post('/edit', updateListing);
 router.delete('/:id', deleteListing);
 router.get('/userlistings/:id', getListingsByUserId);
 
