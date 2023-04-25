@@ -35,6 +35,8 @@ npm run dev
 in /frontend directory
 
 # Summary
-Database runs in docker and it uses mySQL. Backend uses express. Passwords are hashed.
+Database runs in docker and it uses mySQL. Listings table has foreign key userId and it is used to find listings author information in each listingItem component. I used useQuery to get the author information in each listingItem, but it went in some kind of error loop so it was a **challenge**. Query couldn't separate all the requests from eachother, because the request name/id was same in all of them. So the fix was to include userId in the request so the request name was unigue. Listings foreign key also uses ON DELETE CASCADE, so when user is deleted all the users listings also deletes from database.
+
+Backend uses express. Passwords are hashed.
 
 Pages are switched using react-router-dom.
