@@ -53,7 +53,7 @@ const updateListing = async (req, res) => {
   const schema = Joi.object({
     id: Joi.number(),
     name: Joi.string().min(2).required(),
-    price: Joi.number().precision(2).greater(0).required(),
+    price: Joi.number().precision(2).min(0).required(),
     description: Joi.string().min(2).required()
   });
 

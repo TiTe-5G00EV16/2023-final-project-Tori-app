@@ -104,10 +104,10 @@ describe('POST listing endpoint', ()=> {
     expect(response.text).toContain('"name" is not allowed to be empty');
   });
 
-  test('should not allow empty price', async () => {
+  test('should not less than 0 price', async () => {
     const listing = {
       name: 'Test item',
-      price: 0,
+      price: -1,
     };
     const response = await request(app)
       .post('/api/listings')
@@ -116,7 +116,7 @@ describe('POST listing endpoint', ()=> {
       .set('Content', 'application/json')
       .send(listing);
     expect(response.status).toEqual(400);
-    expect(response.text).toContain('"price" must be greater than 0');
+    expect(response.text).toContain('"price" must be greater than or equal to 0');
   });
 
   test('should not allow too short name', async () => {
