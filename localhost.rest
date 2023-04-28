@@ -1,0 +1,50 @@
+GET http://localhost:5000/api/listings
+###
+GET http://localhost:5000/api/listings/13
+###
+POST http://localhost:5000/api/listings HTTP/1.1
+content-type: application/json
+Authorization: BEARER {{authToken}}
+
+{
+  "name": "Hat",
+  "price": 10.3,
+  "description": "Very cool hat"
+}
+###
+POST http://localhost:5000/api/listings/edit HTTP/1.1
+content-type: application/json
+Authorization: BEARER {{authToken}}
+
+{
+  "id": 13,
+  "name": "Test2",
+  "price": 20,
+  "description": "yeet"
+}
+###
+DELETE http://localhost:5000/api/listings/1
+Authorization: BEARER {{authToken}}
+###
+POST http://localhost:5000/api/users/signup
+Content-Type: application/json
+
+{
+  "name": "John Waynee",
+  "email": "john@waynee.com",
+  "password": "john@waynee"
+}
+###
+GET http://localhost:5000/api/users/getowner/79d2b9ac-b92d-4f3b-8151-62d068867570
+###
+# @name login
+POST http://localhost:5000/api/users/login
+Content-Type: application/json
+
+{
+  "email": "jarkko@jarkko.com",
+  "password": "jarkkojarkko"
+}
+
+###
+@authToken = {{login.response.body.token}}
